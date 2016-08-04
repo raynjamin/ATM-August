@@ -3,6 +3,7 @@ package com.theironyard.charlotte;
 import java.util.Scanner;
 
 public class Main {
+    private static ATM atm = new ATM();
 
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
@@ -16,6 +17,8 @@ public class Main {
             throw new Exception("You gotta be called somethin buddy");
         }
 
+        atm.setUser(new Person(name, 75.00));
+
         System.out.println("Welcome, " + name);
 
         System.out.println("What would you like to do today?");
@@ -27,19 +30,15 @@ public class Main {
         int selection = Integer.valueOf(scanner.nextLine());
 
         if (selection == 1) {
-            System.out.println("Your balance is $100.");
+            atm.checkBalance();
         } else if (selection == 2) {
             System.out.println("How much money would you like to withdraw?");
-
             int amount = Integer.valueOf(scanner.nextLine());
 
-            if (amount > 100) {
-                throw new Exception("You don't have enough money son.");
-            }
+            atm.withdrawFunds(amount);
 
-            System.out.printf("Here is your $%d. You have $%d remaining in your account.\n", amount, 100 - amount);
         } else if (selection == 3) {
-            System.out.println("Thank you and please come again.");
+            atm.endSession();
         }
     }
 }
